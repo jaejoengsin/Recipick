@@ -1,0 +1,161 @@
+
+
+/* css전면 수정 필요 */
+.main-box {
+    height: 700px;
+    width: 960px;
+    background: #fff;
+    border-radius: 32px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.13), 0 2px 10px rgba(169, 169, 170, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.02em;
+}
+
+
+.main-box h2 {
+    font-size: 2.2rem;
+    margin-bottom: 18px;
+}
+
+.main-box p {
+    font-size: 1.15rem;
+    text-align: center;
+}
+
+
+.bottom-nav {
+    opacity: 0.95;
+    background: linear-gradient(90deg, white 0%, #e0e0e0 100%);
+    box-shadow: 0 12px 48px rgba(118, 119, 119, 0.23), 0 4px 16px rgba(0, 0, 0, 0.11);
+    width: 700px;
+    height: 70px;
+    /* 미디어 쿼리 추가 작성 */
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    transition: box-shadow 0.2s;
+    
+    /* 더 아래로 내림 */
+}
+
+.bottom-nav:hover {
+    box-shadow: 0 18px 64px rgba(160, 161, 161, 0.28), 0 8px 24px rgba(0, 0, 0, 0.14);
+}
+
+.nav-item {
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    transition: transform 0.22s cubic-bezier(.4, 2.3, .3, .9);
+}
+
+.nav-icon {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    display: inline-block;
+    vertical-align: middle;
+    transition: transform 0.22s cubic-bezier(.4, 2.3, .3, .9);
+    filter: drop-shadow(0 1px 8px rgba(230, 232, 233, 0.14));
+}
+
+.nav-item:hover .nav-icon,
+.nav-item:focus .nav-icon {
+    transform: scale(1.18) rotate(-8deg);
+    filter: drop-shadow(0 2px 13px rgba(240, 209, 77, 0.29));
+    padding-top: clamp(2px, 0.5vw, 4px);
+}
+
+
+@media (max-width: 700px) {
+    .bottom-nav {
+        width: 100%;
+        
+        border-radius: 0px;
+        }
+
+}
+
+
+
+@media (max-width: 960px) {
+    .main-box {
+        width: 100%;
+        border-radius: 0px;
+       
+    }
+
+}
+
+
+/*콘텐츠 프레임*/
+/* 
+@media (max-height: 500px) {
+    .main-box {
+        min-height: 500px;
+   
+} }
+
+
+@media (min-height: 501px) and (max-height: 700px) {
+    .main-box {
+        height: 100%;
+        border-radius: 0px;
+
+    }
+
+}
+
+@media (min-height: 700px) {
+    .main-box {
+        height: 700px;
+    } 
+} */
+
+
+
+
+/* @media (max-width: 700px) {
+    .main-box {
+        padding: 28px 8vw;
+        margin-top: 4vh;
+        margin-bottom: 4vh;
+    }
+
+    .bottom-nav {
+        padding: 10px 6vw;
+        margin-bottom: 8vh;
+    }
+
+    .nav-icon {
+        width: 38px;
+        height: 38px;
+    }
+} */
+
+/* @media (max-width: 480px) {
+    .main-box {
+        padding: 18px 2vw;
+        border-radius: 18px;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    .bottom-nav {
+        padding: 8px 2vw;
+        border-radius: 30px;
+        margin-bottom: 6vh;
+    }
+
+    .nav-icon {
+        width: 28px;
+        height: 28px;
+    }
+} */
+
