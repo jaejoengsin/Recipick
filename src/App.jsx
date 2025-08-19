@@ -11,7 +11,7 @@ import History from './pages/History';
 import MainLayout from './pages/MainLayout';
 
 //import "./NavBar.css";
-import "./styles/comon.css"
+
 import "./App.css";
 
 

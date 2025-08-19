@@ -3,7 +3,7 @@ import React from 'react';
 import { Outlet, Link} from 'react-router-dom';
 
 import "./MainLayout.css";
-import "./../styles/comon.css"
+import "./../styles/common.css"
 
 import RefrigeratorIcon from './../assets/icons/RefrigeratorIcon.png';
 import SearchIcon from './../assets/icons/searchIcon.png';

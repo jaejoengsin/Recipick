@@ -1,29 +1,90 @@
-.search-results {
-    max-width: 600px;
-    max-height: 500px;
+
+.common-list-frame {
+    max-width: 400px;
     margin: 0 auto;
-    margin-top: 80px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(60, 70, 100, 0.07);
-    overflow-y: auto;
-    
+    padding: 12px 0;
+    font-family: 'Segoe UI', 'Apple SD Gothic Neo', Arial, sans-serif;
 }
 
-.searched-ingredient {
-    margin: 0 auto;
-    padding: 30px 24px;
-    border-bottom: 1px solid #f0f2f4;
-    font-size: 1.1em;
-    color: #23272e;
-    cursor: pointer;
-    transition: background 0.14s;
+
+/* 내 냉장고 목록 */
+.fridge-list {
+
 }
 
-.searched-ingredient:last-child {
-    border-bottom: none;
+.fridge-list-item li {
+    margin: 0 auto 18px auto;
+    background: #d7d7d7;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 18px 32px;
+    font-size: 1.1rem;
+    color: #333;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+    min-height: 40px;
+    max-width: 320px;
+    transition: box-shadow 0.2s;
+
 }
 
-.searched-ingredient:hover {
-    background: #f3f6fa;
+.fridge-list-item::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 8px;
+    background: #faf9f8;
 }
+
+.fridge-list-item::-webkit-scrollbar-thumb {
+    background: #d9d9d7;
+    border-radius: 8px;
+}
+
+.fridge-list-item li:hover {
+    box-shadow: 0 4px 16px rgba(226, 226, 222, 0.096);
+    background: #c5c5c4;
+}
+
+/*-------------*/
+
+/* 식재료 추가 검색창 css */
+.search-list-in-fridge{
+
+}
+
+
+
+
+/* --------------- */
+
+.cart-list {
+
+}
+
+
+.recipe-list{
+
+}
+
+.searcrh-list{
+
+}
+
+
+.fridge-list{
+
+}
+
+
+
+
+
+
+
+
+
