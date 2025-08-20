@@ -8,7 +8,9 @@ import MyFridge from './pages/MyFridge';
 import RecipeNav from './pages/RecipeNav';
 import RecipeCart from './pages/RecipeCart';
 import History from './pages/History';
+import Recipe from './pages/Recipe';
 import MainLayout from './pages/MainLayout';
+
 
 //import "./NavBar.css";
 
@@ -24,12 +26,16 @@ export default function App() {
       <Routes>
         <Route index element={<LogIn />} />
         <Route path="register" element={<Register />} />
+
         <Route path="main" element={<MainLayout />}>
             <Route path="myfridge" element={<MyFridge />}/>
             <Route path="recipenav" element={<RecipeNav />} />
             <Route path="recipecart" element={<RecipeCart />} />
             <Route path="history" element={<History />} />
+            {/* 레시피 카트 메뉴에서 레시피 조회 클릭시 라우팅  */}
+            <Route path="recipe" element={<Recipe />} />
         </Route>
+        
       </Routes>
       </BrowserRouter>
     </>

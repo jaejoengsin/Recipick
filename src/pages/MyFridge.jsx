@@ -1,5 +1,8 @@
 
 import "./MyFridge.css";
+import "../styles/font.css"
+
+
 import "../components/common_components/ButtonModules";
 import React, { useState } from 'react';
 
@@ -7,9 +10,8 @@ import React, { useState } from 'react';
 
 //searchbar import
 import SearchBar  from "../components/SearchBar"
-
 import SelectList  from "../components/common_components/ListModule";
-
+import { FridgeAddButton, FridgeEditButton }  from "../components/common_components/ButtonModules";
 
 
 
@@ -27,27 +29,23 @@ function AddingBox() {
 
 export default function MyFridge() {
 
-    const [isAddingBoxVisible, setIsAddingBoxVisible] = useState(false);
-
-    const handleToggleAddingBox = () => {
-        setIsAddingBoxVisible(nowstate=> !nowstate); // state를 true로 변경하여 AddingBox를 화면에 표시합니다.
-    };
-
+    const [isAddingBoxVisible, showFlagStateFunction] = useState(false);
+    const [isStateEdit, setEditPossibleFunction] = useState(false);
+    const [isDoubleActive, preventDoubleActiveFunction] = useState(false);
+   
+    
     return (
         <>
-        <h2 className="fridge-title">my fridge</h2>
+            <h2 className="fridge-title" style={{ fontFamily: "'RecipeFont', sans-serif" }}>my fridge</h2>
             {isAddingBoxVisible && <AddingBox />}
         <div className="container pt-5 pb-5">
-                <SelectList type="myFridge" />
+                <SelectList editOrShow={isStateEdit} type="myFridge" />
         </div>
         <div className="side-floating-btns">
-                <button onClick={handleToggleAddingBox}  id="add-button" className="circle-btn">
-                <i className="fa-solid fa-plus"></i>
-            </button>
-            <button id="edit-button" className="circle-btn">
-                <i className="fa-solid fa-pen-to-square"></i>
-            </button>
+                <FridgeAddButton isDoubleActive={isDoubleActive} preventDoubleActiveFunction={preventDoubleActiveFunction} isAddingBoxVisible={isAddingBoxVisible} showFlagStateFunction={showFlagStateFunction}/>
+                <FridgeEditButton isDoubleActive={isDoubleActive} preventDoubleActiveFunction={preventDoubleActiveFunction} isStateEdit={isStateEdit} setEditPossibleFunction={setEditPossibleFunction} />
         </div>
+        
         </>
     );
 }

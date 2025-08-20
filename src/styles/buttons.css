@@ -1,0 +1,40 @@
+.circle-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #d9d9d7;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.circle-btn:hover {
+    background: #ffd43b;
+}
+
+.circle-btn:hover {
+    background: #ffd43b;
+}
+
+.circle-btn.disable {
+    background: gray !important;
+}
+
+
+
+.fa-plus {
+    transition: transform 0.5s cubic-bezier(.45, 2, .65, .9);
+}
+
+.circle-btn.active .fa-plus {
+    transform: rotate(-45deg);
+}
+
+
+

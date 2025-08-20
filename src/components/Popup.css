@@ -1,0 +1,29 @@
+
+.custom-container {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    width: 500px;
+    max-width: 98vw;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+    padding: 2rem 1rem;
+    min-width: 280px;
+    z-index: 1000;
+  }
+  .custom-container .list-group-item {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    cursor: default !important;
+    transition: none !important;
+  }
+  @media (max-width: 540px) {
+    .container { width: 99vw; padding: 1rem 0.5rem; min-width: unset; }
+  }
+
+  

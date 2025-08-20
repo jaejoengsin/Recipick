@@ -4,6 +4,7 @@ import { Outlet, Link} from 'react-router-dom';
 
 import "./MainLayout.css";
 import "./../styles/common.css"
+import "../styles/font.css";
 
 import RefrigeratorIcon from './../assets/icons/RefrigeratorIcon.png';
 import SearchIcon from './../assets/icons/searchIcon.png';
@@ -51,7 +52,12 @@ function ContentFrame({ children }) {
 function MainLayout(){
     return (
         <div className="container mt-3 px-3">
+            
             <div className="container">
+                {/* 👇 여기에 코드를 추가했습니다. */}
+                <div className="text-center mb-5">
+                    <h1 style={{ fontFamily: "'RecipeFont', sans-serif" }} >Recipick</h1>
+                </div>
                 <ContentFrame>
                     <Outlet />
                 </ContentFrame>

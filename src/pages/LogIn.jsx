@@ -9,8 +9,14 @@ import "./LogIn.css";
 
 
 export default function LogIn() {
-    const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
+
+    
+    // 페이지 이동을 위한 navigate 훅
+    const navigate = useNavigate(); 
+    // 내 냉장고 메뉴로 이동
     const goHome = ()=>{navigate('/main/myfridge');};
+    
+
     return (
          <div className="component">
             <h1>ReciPick</h1>
