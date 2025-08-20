@@ -36,12 +36,7 @@ function NavBar() {
 function ContentFrame({ children }) {
     return (
         <>
-        <button
-            id="profile-button"
-            className="circle-btn"
-            style={{ position: 'fixed', top: '16px', right: '16px' }}>
-        <i className="fa-solid fa-user"></i>
-        </button>
+       
         <div className=' main-box'>
             {children}
         </div>
@@ -52,7 +47,22 @@ function ContentFrame({ children }) {
 function MainLayout(){
     return (
         <div className="container mt-3 px-3">
+            <button
+                id="profile-button"
+                className="circle-btn"
+                style={{ position: 'fixed', top: '16px', right: '16px' }}>
+                <i className="fa-solid fa-user"></i>
+            </button>
+
             
+            {/* <div class="profile-center-box position-relative"> <--현재 레이아웃에 문제 있음
+                <button class="close-x-btn" id="close-x" title="닫기">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <a href="#">로그아웃</a>
+            </div> */}
+
+
             <div className="container">
                 {/* 👇 여기에 코드를 추가했습니다. */}
                 <div className="text-center mb-5">

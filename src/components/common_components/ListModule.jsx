@@ -11,7 +11,7 @@ import HistoryIcon from "../../assets/icons/HistoryIcon.png";
 
 import Button from "./ButtonModules";
 import { useParams } from "react-router-dom";
-import { AddIngredientPopUp, ShowRecipeDetailPopUp } from "../Popup";
+import { AddIngredientPopUp, ShowRecipeDetailPopUp, SyncFridgePopUp } from "../Popup";
 
 
 
@@ -329,8 +329,19 @@ export function CartList() {
 //param: isShowFridgeSyncPopUp 설명: 리스트 내부 요소에서 동기화 버튼을 클릭하면
 //                                  팝업이 뜨도록 설정하기 위해 isShowFridgeSyncPopUp 전달
 //
-export function HistoryList({ isShowSyncFridgePopUp }) {
+
+export function HistoryList() {
+
+    const [isShowSyncFridgePopUp, showSyncFridgePopUpFunction] = useState(false);
+
+    const handleShowSyncPopUp = () => {
+        console.log("sdfs");
+        if (!isShowSyncFridgePopUp) {
+            showSyncFridgePopUpFunction(nowstate => !nowstate);
+        }
+    };
     return (
+        <>
         <div className="custom-list">
             <div className="card-container">
                 <div className="card">
@@ -343,11 +354,15 @@ export function HistoryList({ isShowSyncFridgePopUp }) {
                 <button className="bookmark-btn">
                     <i className="fa-regular fa-bookmark"></i>
                 </button>
-                <button id="refresh-button" className="circle-btn">
+                    <button onClick={handleShowSyncPopUp} id="refresh-button" className="circle-btn">
                     <i className="fa-solid fa-arrows-rotate"></i>
                 </button>
             </div>
         </div>
+            
+        {isShowSyncFridgePopUp && <SyncFridgePopUp 
+                isShowSyncFridgePopUp={isShowSyncFridgePopUp} showSyncFridgePopUpFunction={showSyncFridgePopUpFunction}/>}
+        </>
     );
 }
 

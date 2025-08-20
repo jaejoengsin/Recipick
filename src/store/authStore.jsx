@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { loginRequest } from '../api/authAPI'; // 1단계에서 만든 API 모듈
+import { loginRequest, registerRequest } from '../api/authAPI'; // 1단계에서 만든 API 모듈
 
 
 const useAuthStore = create((set) => ({
@@ -42,8 +42,22 @@ const useAuthStore = create((set) => ({
         else {
             console.error("로그인 상태 반영 안됨");
         }
-    }
+    },
+
+    register: async (loginId, password) => {
+        let res;
+        try {
+            const res = await registerRequest(loginId, password);
+        } catch (error) {
+            console.error("회원가입 실패:", error);
+            throw error; // 컴포넌트에서 에러를 처리할 수 있도록 전파
+        }
+    },
+
+
 }));
+
+
 
 // 앱 시작 시 localStorage를 확인하여 로그인 상태를 복원
 useAuthStore.getState().checkAuth();

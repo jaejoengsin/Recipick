@@ -2,7 +2,6 @@
 import "./MyFridge.css";
 import "../styles/font.css"
 
-
 import "../components/common_components/ButtonModules";
 import React, { useState } from 'react';
 
@@ -29,6 +28,7 @@ function AddingBox() {
 
 export default function MyFridge() {
 
+
     const [isAddingBoxVisible, showFlagStateFunction] = useState(false);
     const [isStateEdit, setEditPossibleFunction] = useState(false);
     const [isDoubleActive, preventDoubleActiveFunction] = useState(false);
@@ -49,3 +49,6 @@ export default function MyFridge() {
         </>
     );
 }
+
+
+

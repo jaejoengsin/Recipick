@@ -87,9 +87,41 @@ export function AddIngredientPopUp({ isShowAddIngredientPopUp, showAddIngredient
 }
 
 
-export function SyncFridgePopUp() {
+export function SyncFridgePopUp({ isShowSyncFridgePopUp, showSyncFridgePopUpFunction }) {
+    
+    const handleClosePopUp = () => {
+        showSyncFridgePopUpFunction(false);
+    };
+    
+    
     return (
-        <></>
+        <>
+        { isShowSyncFridgePopUp &&
+                <div className="custom-container">
+            <div className="list-group mb-4">
+                <a href="#" className="list-group-item custom-list-item">
+                    <div className="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <h5 className="mb-1">재료명</h5>
+                            <small className="text-muted">내 냉장고에서 적어놨던 memo내용</small>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                            <div className="input-group" style={{ width: '110px' }}>
+                                <button className="btn btn-outline-secondary btn-decrease" type="button">−</button>
+                                <input type="text" className="form-control text-center qty-value" defaultValue="1" readOnly />
+                                <button className="btn btn-outline-secondary btn-increase" type="button">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div className="d-flex bottom-btns-row mt-1">
+                <button onClick={handleClosePopUp} type="button" className="btn btn-lightgray rounded-lg-btn">취소</button>
+                        <button onClick={handleClosePopUp} type="button" className="btn btn-primary rounded-lg-btn">재료차감</button>
+            </div>
+        </div>
+        }
+    </>
     );
 }
 

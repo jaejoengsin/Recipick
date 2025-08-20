@@ -88,3 +88,60 @@
     filter: drop-shadow(0 2px 13px rgba(240, 209, 77, 0.29));
     padding-top: clamp(2px, 0.5vw, 4px);
 }
+
+
+
+.profile-center-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 270px;
+    min-width: 220px;
+    max-width: 90vw;
+    min-height: 80px;
+    padding: 1.4rem 1rem 1.1rem 1rem;
+    background: #fff;
+    border-radius: 0.9rem;
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.13);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-center-box .close-x-btn {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: #444;
+    cursor: pointer;
+    z-index: 20;
+    line-height: 1;
+}
+
+ .profile-center-box .close-x-btn:hover {
+    color: #d32f2f;
+}
+
+ .profile-center-box a {
+    color: #337ab7;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 1rem;
+    display: block;
+    padding: 0.7rem 0.3rem;
+    border-radius: 0.3em;
+    margin: 8px 0 0 0;
+    text-align: center;
+    transition: background 0.18s;
+}
+
+ .profile-center-box a:hover {
+    background: #f5f5f5;
+}
+
