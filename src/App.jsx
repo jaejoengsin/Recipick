@@ -14,6 +14,13 @@ import MainLayout from './pages/MainLayout';
 
 //import "./NavBar.css";
 
+
+
+
+
+
+
+
 import "./App.css";
 
 
@@ -35,7 +42,7 @@ export default function App() {
             {/* 레시피 카트 메뉴에서 레시피 조회 클릭시 라우팅  */}
             <Route path="recipe" element={<Recipe />} />
         </Route>
-        
+
       </Routes>
       </BrowserRouter>
     </>
