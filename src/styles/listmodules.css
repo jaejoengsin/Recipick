@@ -160,3 +160,17 @@
 .circle-btn:hover {
     background: #ffd43b;
 }
+
+
+
+
+.card-button-wrapper {
+    /* 모든 기본 버튼 스타일 제거 */
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    /* 커서 모양 변경 */
+    cursor: pointer;
+    
+    /* 부모 요소의 너비를 따르도록 설정 */ }

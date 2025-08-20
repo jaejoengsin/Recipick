@@ -15,17 +15,7 @@ export default function LogIn() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // ✨ 요구사항 반영: 로그인 상태 확인 및 리디렉션 로직
-    useEffect(() => {
-        // 만약 이미 로그인된 상태라면,
-        if (isLoggedIn) {
-            // '내 냉장고' 페이지로 이동시킵니다.
-            // { replace: true } 옵션은 브라우저 방문 기록에 현재 페이지(로그인 페이지)를 남기지 않습니다.
-            // 따라서 사용자가 리디렉션된 후 뒤로 가기를 눌러도 다시 로그인 페이지로 돌아오지 않습니다.
-            alert('이미 로그인되어 있습니다. 메인 페이지로 이동합니다.');
-            navigate('/main/myfridge', { replace: true });
-        }
-    }, [isLoggedIn, navigate]); // isLoggedIn이나 navigate가 변경될 때마다 이 효과를 재실행합니다.
-
+ 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -73,3 +63,5 @@ export default function LogIn() {
         </div>
     );
 }
+
+

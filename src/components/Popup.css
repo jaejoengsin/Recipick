@@ -26,4 +26,14 @@
     .container { width: 99vw; padding: 1rem 0.5rem; min-width: unset; }
   }
 
+  .bookmark-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+  }
+
+  .bookmark-btn.active .fa-bookmark {
+      color: #ffd43b;
+  }
+
   

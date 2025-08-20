@@ -6,11 +6,49 @@ import "./Popup.css";
 
 
 
-export function ShowRecipeDetailPopUp() {
+export function ShowRecipeDetailPopUp({ isShowRecipeDetailPopUp, showRecipeDetailPopUpFunction }) {
+    const handleCloseRecipeDetail = () => {
+        showRecipeDetailPopUpFunction(false);
+    };
     return (
-        <></>
+        <div className="card mb-3 ">
+            <div className="custom-container">
+                <img src="https://via.placeholder.com/600x200" className="card-img-top" alt="레시피 이미지" />
+                <div className="card-body">
+                    <h5 className="card-title">메뉴명</h5>
+                    <ul className="list-group list-group-flush text-center">
+                        <li className="list-group-item"></li>
+                        <li className="list-group-item">재료</li>
+                        <li className="list-group-item">레시피(조리법)</li>
+                        <li className="list-group-item text-center">
+                            <button onClick={handleCloseRecipeDetail} id="bookmark-btn" className="bookmark-btn p-4 mx-auto d-block">
+                                <i className="fa-regular fa-bookmark"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     );
 }
+// 스크랩 반응 코드
+// const btn = document.getElementById('bookmark-btn');
+// const icon = btn.querySelector('.fa-bookmark');
+// btn.addEventListener('click', function (event) {
+//     event.preventDefault();
+//     btn.classList.toggle('active');
+//     if (btn.classList.contains('active')) {
+//         icon.classList.remove('fa-regular');
+//         icon.classList.add('fa-solid');
+//     } else {
+//         icon.classList.remove('fa-solid');
+//         icon.classList.add('fa-regular');
+//     }
+// });
+
+
+
+
 
 
 export function AddIngredientPopUp({ isShowAddIngredientPopUp, showAddIngredientPopUpFunction }) {
@@ -22,7 +60,7 @@ export function AddIngredientPopUp({ isShowAddIngredientPopUp, showAddIngredient
 
     return (
         <>
-            { isShowAddIngredientPopUp  &&
+            {isShowAddIngredientPopUp &&
                 <div className="custom-container">
                     <div className="list-group">
                         <a href="#" className="list-group-item list-group-item-action">
@@ -37,8 +75,8 @@ export function AddIngredientPopUp({ isShowAddIngredientPopUp, showAddIngredient
                             </div>
                             <input type="text" className="form-control mb-4" placeholder="memo장" />
                             <div className="d-flex justify-content-center gap-3">
-                                <button onClick={handleClosePopUp}  className="btn btn-outline-danger btn-delete w-50" type="button">취소</button>
-                                <button onClick={handleClosePopUp}  className="btn btn-outline-dark btn-save w-50" type="button">저장</button>
+                                <button onClick={handleClosePopUp} className="btn btn-outline-danger btn-delete w-50" type="button">취소</button>
+                                <button onClick={handleClosePopUp} className="btn btn-outline-dark btn-save w-50" type="button">저장</button>
                             </div>
                         </a>
                     </div>
