@@ -36,9 +36,14 @@ export default function RecipeCart() {
 
 
     return (
+        <>
         <div className='container'>
+            <div className='container'>
+                <h1 className="pb-1" style={{ fontFamily: "'RecipeFont', sans-serif", fontWeight: 'bold' }} >myfridge</h1>
+            </div>
             <IngredientInventory />
         </div>
+        </>
     );
 
 }

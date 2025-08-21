@@ -13,6 +13,7 @@ const useAuthStore = create((set) => ({
         try {
             const userData = await loginRequest(loginId, password);
             // API 요청 성공 시, user 상태와 isLoggedIn 상태를 업데이트
+           
             set({ user: userData, isLoggedIn: true });
 
             // 💡 로그인 정보 영속성 관리
@@ -36,7 +37,9 @@ const useAuthStore = create((set) => ({
     // 앱 시작 시 로그인 상태를 확인하는 액션
     checkAuth: () => {
         const storedUser = localStorage.getItem('user');
-        if (storedUser) {
+        console.log(storedUser);
+        //새로고침 시에 로컬 스토리지에 저장된 로그인 정보를 불러와서 zustand 전역 저장소에 저장
+        if (storedUser) { 
             set({ user: JSON.parse(storedUser), isLoggedIn: true });
         }
         else {

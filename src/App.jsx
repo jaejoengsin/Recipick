@@ -11,6 +11,7 @@ import History from './pages/History';
 import Recipe from './pages/Recipe';
 import MainLayout from './pages/MainLayout';
 
+
 // 1. 인증 상태를 확인하기 위한 useAuthStore를 import 합니다.
 import useAuthStore from './store/authStore';
 

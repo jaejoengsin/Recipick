@@ -61,8 +61,12 @@ export function AddIngredientPopUp({ isShowAddIngredientPopUp, showAddIngredient
     return (
         <>
             {isShowAddIngredientPopUp &&
-                <div className="custom-container">
-                    <div className="list-group">
+            <div className="custom-container">
+                    {/* - 이 div에 w-75와 mx-auto 클래스를 추가했습니다.
+                   - w-75: 너비를 부모 요소의 75%로 설정합니다.
+                   - mx-auto: 좌우 마진을 자동으로 설정하여 요소를 수평 중앙에 배치합니다.
+                 */}
+                    <div className="list-group w-75 mx-auto">
                         <a href="#" className="list-group-item list-group-item-action">
                             <div className="d-flex align-items-center w-100 mb-3">
                                 <h5 className="mb-0 me-3">재료명</h5>
@@ -70,7 +74,7 @@ export function AddIngredientPopUp({ isShowAddIngredientPopUp, showAddIngredient
                                 <div className="input-group" style={{ width: '110px' }}>
                                     <button className="btn btn-outline-secondary btn-decrease" type="button">−</button>
                                     <input type="text" className="form-control text-center qty-value" defaultValue="1" readOnly />
-                                    <button className="btn btn-outline-secondary btn-increase" type="button">+</button>
+                                                    <button className="btn btn-outline-secondary btn-increase" type="button">+</button>
                                 </div>
                             </div>
                             <input type="text" className="form-control mb-4" placeholder="memo장" />
@@ -81,6 +85,7 @@ export function AddIngredientPopUp({ isShowAddIngredientPopUp, showAddIngredient
                         </a>
                     </div>
                 </div>
+         
             }
         </>
     );

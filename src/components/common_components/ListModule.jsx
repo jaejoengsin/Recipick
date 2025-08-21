@@ -20,30 +20,54 @@ export function MyFridgeList({ editOrShow }) {
 
     return (
         <div className="fridge-list">
-            <div className="list-group pt-4">
+
+            {/* - 이 div에 maxHeight를 500px로 설정했습니다.
+          - 리스트 내용이 500px보다 길어지면, overflowY: 'auto' 속성에 의해
+          - 자동으로 세로 스크롤바가 나타납니다.
+          - 기존의 h-75 클래스는 제거하여 고정 높이를 사용하도록 했습니다.
+        */}
+            <div className="list-group pt-2 w-75 mx-auto" style={{ maxHeight: '500px', overflowY: 'auto' }}>
                 {/* state: edit */}
                 {editOrShow &&
-                    <a href="#" className="list-group-item list-group-item-action">
-                        <div className="d-flex w-100 justify-content-between align-items-center">
-                            <div>
-                                <h5 className="mb-1">재료명 </h5>
-                                <small className="text-muted">3 days ago</small>
-                                <br />
-                                <input type="text" className="form-control" placeholder="memo장" />
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                                <div className="input-group" style={{ width: '110px' }}>
-                                    <button className="btn btn-outline-secondary btn-decrease" type="button">−</button>
-                                    <input type="text" className="form-control text-center qty-value" defaultValue="1" readOnly />
-                                    <button className="btn btn-outline-secondary btn-increase" type="button">+</button>
+                    <>
+                        <a href="#" className="list-group-item list-group-item-action">
+                            <div className="d-flex w-100 justify-content-between align-items-center">
+                                <div>
+                                    <h5 className="mb-1">재료명 </h5>
+                                    <small className="text-muted">3 days ago</small>
+                                    <br />
+                                    <input type="text" className="form-control" placeholder="memo장" />
                                 </div>
-                                <button className="btn btn-outline-danger btn-delete" type="button">삭제</button>
+                                <div className="d-flex align-items-center gap-2">
+                                    <div className="input-group" style={{ width: '110px' }}>
+                                        <button className="btn btn-outline-secondary btn-decrease" type="button">−</button>
+                                        <input type="text" className="form-control text-center qty-value" defaultValue="1" readOnly />
+                                        <button className="btn btn-outline-secondary btn-increase" type="button">+</button>
+                                    </div>
+                                    <button className="btn btn-outline-danger btn-delete" type="button">삭제</button>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+
+                    </>
                 }
                 {/* state:show */}
                 {!editOrShow &&
+                    <>
+                        <div className="list-group-item">
+                            <div className="d-flex w-100 justify-content-between align-items-center">
+                                <div>
+                                    <h5 className="mb-1">재료명</h5>
+                                    <small className="text-muted">3 days ago</small>
+                                    <div className="mt-2 text-body-secondary">
+                                        여기에 메모 내용을 보여줍니다.
+                                    </div>
+                                </div>
+                                <div>
+                                    <span className="badge bg-transparent fs-3 text-dark ">1</span>
+                                </div>
+                            </div>
+                        </div>
                     <div className="list-group-item">
                         <div className="d-flex w-100 justify-content-between align-items-center">
                             <div>
@@ -58,10 +82,53 @@ export function MyFridgeList({ editOrShow }) {
                             </div>
                         </div>
                     </div>
+                    <div className="list-group-item">
+                        <div className="d-flex w-100 justify-content-between align-items-center">
+                            <div>
+                                <h5 className="mb-1">재료명</h5>
+                                <small className="text-muted">3 days ago</small>
+                                <div className="mt-2 text-body-secondary">
+                                    여기에 메모 내용을 보여줍니다.
+                                </div>
+                            </div>
+                            <div>
+                                <span className="badge bg-transparent fs-3 text-dark ">1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="list-group-item">
+                        <div className="d-flex w-100 justify-content-between align-items-center">
+                            <div>
+                                <h5 className="mb-1">재료명</h5>
+                                <small className="text-muted">3 days ago</small>
+                                <div className="mt-2 text-body-secondary">
+                                    여기에 메모 내용을 보여줍니다.
+                                </div>
+                            </div>
+                            <div>
+                                <span className="badge bg-transparent fs-3 text-dark ">1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="list-group-item">
+                        <div className="d-flex w-100 justify-content-between align-items-center">
+                            <div>
+                                <h5 className="mb-1">재료명</h5>
+                                <small className="text-muted">3 days ago</small>
+                                <div className="mt-2 text-body-secondary">
+                                    여기에 메모 내용을 보여줍니다.
+                                </div>
+                            </div>
+                            <div>
+                                <span className="badge bg-transparent fs-3 text-dark ">1</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    </>
                 }
             </div>
-
-        </div>
+            </div>
     );
 }
 // <div className="fridge-list-item">
@@ -116,11 +183,29 @@ export function SearchListInFridge() {
     return (
         <>
             <div className="search-list-in-fridge">
-                <div className="list-group">
-                    <button onClick={handleShowPopUp} type="button" className="list-group-item list-group-item-action">감</button>
-                    <button onClick={handleShowPopUp} type="button" className="list-group-item list-group-item-action">감귤</button>
-                    <button onClick={handleShowPopUp} type="button" className="list-group-item list-group-item-action">감자</button>
-                    <button onClick={handleShowPopUp} type="button" className="list-group-item list-group-item-action">감스트</button>
+                <div className="list-group w-75 mx-auto " style={{ minWidth: "300px", maxHeight: "400px", overflowY: 'auto' }}>
+                  
+                    <button
+                        onClick={handleShowPopUp}
+                        type="button"
+                        className="list-group-item list-group-item-action rounded-3 shadow-sm border-0 my-1"
+                    >
+                        감
+                    </button>
+                    <button
+                        onClick={handleShowPopUp}
+                        type="button"
+                        className="list-group-item list-group-item-action rounded-3 shadow-sm border-0 my-1"
+                    >
+                        감
+                    </button>
+                    <button
+                        onClick={handleShowPopUp}
+                        type="button"
+                        className="list-group-item list-group-item-action rounded-3 shadow-sm border-0 my-1"
+                    >
+                        감
+                    </button>
                 </div>
             </div>
             {isShowAddIngredientPopUp && <AddIngredientPopUp isShowAddIngredientPopUp={isShowAddIngredientPopUp}
@@ -146,15 +231,24 @@ export function SearchListInFridge() {
 //검색창에서 냉장고(체크)
 export function SearchListInRecipeNav() {
     return (
-        <div className="search-list-in-nav">
+        <div className="search-list-in-nav ">
+            <ul className="list-group ">
             <li className="list-group-item">
                 <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                감
+              fsddddddddddddddddd
             </li>
             <li className="list-group-item">
                 <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
                 감귤
             </li>
+                <li className="list-group-item">
+                    <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
+                    감자
+                </li>
+                <li className="list-group-item">
+                    <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
+                    감자
+                </li>
             <li className="list-group-item">
                 <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
                 감자
@@ -167,6 +261,42 @@ export function SearchListInRecipeNav() {
                 <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
                 감스트
             </li>
+            <li className="list-group-item">
+                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
+                감스트
+            </li>
+            <li className="list-group-item">
+                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
+                감스트
+            </li>
+            <li className="list-group-item">
+                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
+                감스트
+            </li>
+            <li className="list-group-item">
+                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
+                감스트
+            </li>
+            <li className="list-group-item">
+                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
+                감스트
+            </li>
+            <li className="list-group-item">
+                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
+                감스트
+            </li>
+
+            <li className="list-group-item">
+                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
+                감스트
+            </li>
+            <li className="list-group-item">
+                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
+                감스트
+            </li>
+
+            </ul>
+
         </div>
     );
 }
