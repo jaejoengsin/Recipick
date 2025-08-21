@@ -17,7 +17,7 @@ import { AddIngredientPopUp, ShowRecipeDetailPopUp, SyncFridgePopUp } from "../P
 
 ////zustand
 import useFridgeStore from '../../store/useFridgeStore';
-import useAuthStore from '../../store/authStore'; 
+import useAuthStore from '../../store/useAuthStore'; 
 
 
 import { fetchAutocompleteResults } from '../../api/searchAPI'

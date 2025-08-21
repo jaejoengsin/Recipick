@@ -1,7 +1,7 @@
 import "./Popup.css";
 import React, { useState } from 'react'; 
 import useFridgeStore from "../store/useFridgeStore";
-import useAuthStore from "../store/authStore";
+import useAuthStore from "../store/useAuthStore";
 
 
 

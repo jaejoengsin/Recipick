@@ -10,7 +10,7 @@ import { FridgeAddButton, FridgeEditButton } from "../components/common_componen
 //api
 
 //userid
-import useAuthStore from "../store/authStore";
+import useAuthStore from "../store/useAuthStore";
 import useFridgeStore from '../store/useFridgeStore';
 import "./MyFridge.css";
 import "../styles/font.css"

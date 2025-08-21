@@ -1,7 +1,7 @@
 
 import {React, useState }from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
-import useAuthStore from '../store/authStore';
+import useAuthStore from '../store/useAuthStore';
 
 
 import "./MainLayout.css";

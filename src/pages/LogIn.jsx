@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react'; // useEffect를 import 합니다.
 import { Link, useNavigate } from 'react-router-dom';
-import useAuthStore from '../store/authStore';
+import useAuthStore from '../store/useAuthStore';
 import "./LogIn.css";
 
 export default function LogIn() {
