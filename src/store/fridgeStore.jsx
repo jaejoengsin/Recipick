@@ -1,20 +1,23 @@
 import { create } from 'zustand';
-import * as fridgeAPI from '../api/fridgeAPI';
+// API 함수 이름을 정확하게 import 합니다.
+import { getFridgeIngredients, addIngredient, updateIngredients, deleteIngredient } from '../api/fridgeAPI';
+
+// 스토어 내부에서 사용할 기본 페이지 옵션
+const defaultPageable = { page: 0, size: 20, sort: 'createdAt,desc' };
 
 const useFridgeStore = create((set, get) => ({
-    // 1. State: 상태 변수들
+    // State
     ingredients: [],
     isLoading: true,
 
-    // 2. Actions: 상태를 변경하는 함수들
-    // 이 함수들 안에 API 호출과 상태 업데이트 로직이 모두 포함됩니다.
-
-    // 냉장고 재료 초기 데이터 로드
+    // Actions
+    /**
+     * 초기 재료 목록을 불러옵니다.
+     */
     fetchIngredients: async (memberId) => {
         set({ isLoading: true });
         try {
-            const pageable = { page: 0, size: 20, sort: 'createdAt,desc' };
-            const data = await fridgeAPI.getFridgeIngredients(memberId, pageable);
+            const data = await getFridgeIngredients(memberId, defaultPageable);
             if (data && data.content) {
                 set({ ingredients: data.content, isLoading: false });
             }
@@ -24,34 +27,40 @@ const useFridgeStore = create((set, get) => ({
         }
     },
 
-    // 재료 수량/메모 업데이트
-    updateIngredient: async (ingredientId, updatedData) => {
+    /**
+     * 새 재료를 추가합니다.
+     */
+    addIngredient: async (ingredientData, memberId) => {
         try {
-            // 서버에 먼저 업데이트 요청
-            await fridgeAPI.updateIngredient(ingredientId, updatedData);
-
-            // 성공 시, 클라이언트 상태를 업데이트하여 즉시 UI에 반영
-            const newList = get().ingredients.map(ing =>
-                ing.fridgeIngredientId === ingredientId ? { ...ing, ...updatedData } : ing
-            );
-            set({ ingredients: newList });
-
+            const updatedPage = await addIngredient(ingredientData, memberId, defaultPageable);
+            // 서버가 반환한 최신 목록으로 상태를 업데이트합니다.
+            set({ ingredients: updatedPage.content });
         } catch (error) {
-            console.error("Failed to update ingredient:", error);
-            // 에러 발생 시 사용자에게 알림을 주는 로직 추가 가능
+            console.error("Failed to add ingredient:", error);
         }
     },
 
-    // 재료 삭제
-    deleteIngredient: async (ingredientId) => {
+    /**
+     * 단일 재료를 업데이트합니다. (서버 API는 배열을 받도록 되어있음)
+     */
+    updateSingleIngredient: async (updateRequest, memberId) => {
+        // updateRequest 예시: { fridgeIngredientId: 1, count: 5, memo: "수정된 메모" }
         try {
-            // 서버에 먼저 삭제 요청
-            await fridgeAPI.deleteIngredient(ingredientId);
+            // 서버 API는 배열을 받으므로, 단일 객체를 배열로 감싸서 보냅니다.
+            const updatedPage = await updateIngredients([updateRequest], memberId, defaultPageable);
+            set({ ingredients: updatedPage.content });
+        } catch (error) {
+            console.error("Failed to update ingredient:", error);
+        }
+    },
 
-            // 성공 시, 클라이언트 상태에서 해당 아이템을 제거하여 즉시 UI에 반영
-            const newList = get().ingredients.filter(ing => ing.fridgeIngredientId !== ingredientId);
-            set({ ingredients: newList });
-
+    /**
+     * 재료를 삭제합니다.
+     */
+    deleteIngredient: async (fridgeIngredientId, memberId) => {
+        try {
+            const updatedPage = await deleteIngredient(fridgeIngredientId, memberId, defaultPageable);
+            set({ ingredients: updatedPage.content });
         } catch (error) {
             console.error("Failed to delete ingredient:", error);
         }
@@ -59,4 +68,3 @@ const useFridgeStore = create((set, get) => ({
 }));
 
 export default useFridgeStore;
-
