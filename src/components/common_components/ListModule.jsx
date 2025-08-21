@@ -148,38 +148,48 @@ export function MyFridgeList({ editOrShow }) {
 
 // 부모로부터 results 배열을 props로 받음
 export function SearchListInFridge({ results }) {
-    const [isShowAddIngredientPopUp, showAddIngredientPopUpFunction] = useState(false);
+    // [수정] boolean 상태 대신 선택된 재료 객체를 상태로 관리 (null이면 팝업 닫힘)
+    const [selectedIngredient, setSelectedIngredient] = useState(null);
 
-    const handleShowPopUp = () => {
-        if (!isShowAddIngredientPopUp) {
-            showAddIngredientPopUpFunction(nowstate => !nowstate);
-        }
+    // [수정] 클릭된 아이템을 상태에 저장하여 팝업을 띄우는 핸들러
+    const handleShowPopUp = (item) => {
+        setSelectedIngredient(item);
+    };
+
+    // [수정] 팝업을 닫는 핸들러 (상태를 null로 변경)
+    const handleClosePopUp = () => {
+        setSelectedIngredient(null);
     };
 
     return (
         <>
             <div className="search-list-in-fridge mt-3">
                 <div className="list-group w-75 mx-auto" style={{ minWidth: "300px", maxHeight: "400px", overflowY: 'auto' }}>
-                    {/* results 배열의 길이가 0보다 클 때만 목록을 렌더링 */}
                     {results && results.length > 0 ? (
                         results.map((item) => (
                             <button
-                                key={item.id} // 각 아이템에 고유한 key를 부여
-                                onClick={handleShowPopUp}
+                                key={item.id}
+                                // [수정] 클릭 시 해당 item 정보를 핸들러에 전달
+                                onClick={() => handleShowPopUp(item)}
                                 type="button"
                                 className="list-group-item list-group-item-action rounded-3 shadow-sm border-0 my-1"
                             >
-                                {item.name} {/* API 응답의 name 값을 노출 */}
+                                {item.name}
                             </button>
                         ))
                     ) : (
-                        // 검색 결과가 없을 때 표시할 메시지
                         <p className="text-center text-muted">검색 결과가 없습니다.</p>
                     )}
                 </div>
             </div>
-            {isShowAddIngredientPopUp && <AddIngredientPopUp isShowAddIngredientPopUp={isShowAddIngredientPopUp}
-                showAddIngredientPopUpFunction={showAddIngredientPopUpFunction} />}
+
+            {/* [수정] selectedIngredient가 있을 때만 팝업 렌더링 */}
+            {selectedIngredient && (
+                <AddIngredientPopUp
+                    ingredient={selectedIngredient} // 선택된 재료 정보 전달
+                    onClose={handleClosePopUp}      // 팝업을 닫는 함수 전달
+                />
+            )}
         </>
     );
 }
@@ -208,60 +218,6 @@ export function SearchListInRecipeNav() {
                 <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
                 감귤
             </li>
-                <li className="list-group-item">
-                    <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                    감자
-                </li>
-                <li className="list-group-item">
-                    <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                    감자
-                </li>
-            <li className="list-group-item">
-                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                감자
-            </li>
-            <li className="list-group-item">
-                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                감바스
-            </li>
-            <li className="list-group-item">
-                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                감스트
-            </li>
-            <li className="list-group-item">
-                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                감스트
-            </li>
-            <li className="list-group-item">
-                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                감스트
-            </li>
-            <li className="list-group-item">
-                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                감스트
-            </li>
-            <li className="list-group-item">
-                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                감스트
-            </li>
-            <li className="list-group-item">
-                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                감스트
-            </li>
-            <li className="list-group-item">
-                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                감스트
-            </li>
-
-            <li className="list-group-item">
-                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                감스트
-            </li>
-            <li className="list-group-item">
-                <input className="form-check-input me-1" type="checkbox" value="" aria-label="..." />
-                감스트
-            </li>
-
             </ul>
 
         </div>

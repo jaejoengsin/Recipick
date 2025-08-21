@@ -1,7 +1,7 @@
 import "./Popup.css";
 import React, { useState } from 'react'; 
-
-
+import useFridgeStore from "../store/useFridgeStore";
+import useAuthStore from "../store/authStore";
 
 
 
@@ -56,44 +56,77 @@ export function ShowRecipeDetailPopUp({ isBookMarkFunction, isShowRecipeDetailPo
 
 
 
+export function AddIngredientPopUp({ ingredient, onClose }) {
+    // [추가] 팝업 내부에서 수량과 메모를 관리하는 상태
+    const [quantity, setQuantity] = useState(1);
+    const [memo, setMemo] = useState('');
 
-export function AddIngredientPopUp({ isShowAddIngredientPopUp, showAddIngredientPopUpFunction }) {
+    // [추가] Zustand store에서 addIngredient 액션을 가져옴
+    const { addIngredient } = useFridgeStore();
+    const { user } = useAuthStore(); // 👈 2. 스토어에서 user 정보 가져오기
 
-    const handleClosePopUp = () => {
-        showAddIngredientPopUpFunction(false);
+    // [추가] 수량 조절 핸들러
+    const handleQuantityChange = (amount) => {
+        setQuantity(prev => Math.max(1, prev + amount)); // 최소 수량은 1
     };
 
+    // [추가] 저장(추가) 버튼 핸들러
+    const handleSave = async () => {
+        // TODO: memberId는 실제 로그인 정보에서 가져와야 합니다. 여기서는 예시로 1을 사용합니다.
+        
+        // 👈 3. user 객체에서 id를 가져와 memberId로 사용
+        const memberId = user?.id; 
+
+        if (!memberId) {
+            alert("로그인 정보가 없습니다. 다시 로그인해주세요.");
+            console.error("memberId를 찾을 수 없습니다.");
+            return;
+        }
+        
+        const ingredientData = {
+            ingredientId: ingredient.id, // 부모에게 받은 재료 ID
+            count: quantity,
+            memo: memo,
+        };
+        
+        console.log("최종 전송 데이터:", { ingredientData, memberId });
+        // Zustand store의 addIngredient 액션 호출
+        await addIngredient(ingredientData, memberId);
+
+        // 작업 완료 후 팝업 닫기
+        onClose();
+    };
 
     return (
-        <>
-            {isShowAddIngredientPopUp &&
-            <div className="custom-container">
-                    {/* - 이 div에 w-75와 mx-auto 클래스를 추가했습니다.
-                   - w-75: 너비를 부모 요소의 75%로 설정합니다.
-                   - mx-auto: 좌우 마진을 자동으로 설정하여 요소를 수평 중앙에 배치합니다.
-                 */}
-                    <div className="list-group w-75 mx-auto">
-                        <a href="#" className="list-group-item list-group-item-action">
-                            <div className="d-flex align-items-center w-100 mb-3">
-                                <h5 className="mb-0 me-3">재료명</h5>
-                                <small className="text-muted me-3">1 days ago</small>
-                                <div className="input-group" style={{ width: '110px' }}>
-                                    <button className="btn btn-outline-secondary btn-decrease" type="button">−</button>
-                                    <input type="text" className="form-control text-center qty-value" defaultValue="1" readOnly />
-                                                    <button className="btn btn-outline-secondary btn-increase" type="button">+</button>
-                                </div>
-                            </div>
-                            <input type="text" className="form-control mb-4" placeholder="memo장" />
-                            <div className="d-flex justify-content-center gap-3">
-                                <button onClick={handleClosePopUp} className="btn btn-outline-danger btn-delete w-50" type="button">취소</button>
-                                <button onClick={handleClosePopUp} className="btn btn-outline-dark btn-save w-50" type="button">저장</button>
-                            </div>
-                        </a>
+        <div className="custom-container">
+            <div className="list-group w-75 mx-auto">
+                <div className="list-group-item list-group-item-action">
+                    <div className="d-flex align-items-center w-100 mb-3">
+                        {/* [수정] 재료명을 props에서 받아 표시 */}
+                        <h5 className="mb-0 me-3">{ingredient.name}</h5>
+                        <div className="input-group" style={{ width: '150px' }}>
+                            <button className="btn btn-outline-secondary" type="button" onClick={() => handleQuantityChange(-1)}>−</button>
+                            <input type="text" className="form-control text-center" value={quantity} readOnly />
+                            <button className="btn btn-outline-secondary" type="button" onClick={() => handleQuantityChange(1)}>+</button>
+                        </div>
+                    </div>
+                    {/* [수정] 메모 입력창에 value와 onChange 연결 */}
+                    <input
+                        type="text"
+                        className="form-control mb-4"
+                        placeholder="메모를 입력하세요 (선택)"
+                        value={memo}
+                        onChange={(e) => setMemo(e.target.value)}
+                    />
+                    <div className="d-flex justify-content-center gap-3">
+                        {/* [수정] 취소 버튼은 onClose 함수 호출 */}
+                        <button onClick={onClose} className="btn btn-outline-danger w-50" type="button">취소</button>
+                        {/* [수정] 저장 버튼은 handleSave 함수 호출 */}
+                        <button onClick={handleSave} className="btn btn-outline-dark w-50" type="button">저장</button>
                     </div>
                 </div>
-         
-            }
-        </>
+            </div>
+        </div>
     );
 }
 
