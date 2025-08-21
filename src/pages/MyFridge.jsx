@@ -15,19 +15,50 @@ import useFridgeStore from '../store/useFridgeStore';
 import "./MyFridge.css";
 import "../styles/font.css"
 
+import {fetchAutocompleteResults} from "../api/searchAPI"
 
 
 
 
-function AddingBox() {
+export function AddingBox() {
+    const [searchResults, setSearchResults] = useState([]);
+    // API 호출 중 에러 발생을 대비한 상태 (선택 사항)
+    const [error, setError] = useState(null);
+
+    const handleSearch = async (query) => {
+        console.log("fsddfsd");
+        if (!query.trim()) {
+            setSearchResults([]);
+            setError(null);
+            return;
+        }
+
+        try {
+            // [수정] API 호출 함수를 fetchAutocompleteResults로 변경합니다.
+            const results = await fetchAutocompleteResults(query);
+            setSearchResults(results);
+            setError(null); // 성공 시 에러 상태 초기화
+        } catch (err) {
+            // API 호출 실패 시 에러 처리
+            setError("데이터를 불러오는 데 실패했습니다.");
+            setSearchResults([]); // 기존 목록을 비워줌
+            console.error(err); // 콘솔에 에러 기록
+        }
+    };
+
     return (
         <div className="adding-box">
-            <SearchBar></SearchBar>
-            <SelectList type="searchInFridge" />
+            <SearchBar onSearch={handleSearch} />
+            {/* 에러가 발생했을 경우 메시지를 표시 */}
+            {error && <p className="text-center text-danger mt-2">{error}</p>}
+            <SelectList type="searchInFridge" results={searchResults} />
         </div>
     );
-
 }
+
+
+
+
 export default function MyFridge() {
 
     const { user } = useAuthStore();

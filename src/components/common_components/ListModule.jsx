@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState } from "react";
 
 
 import "../../styles/listmodules.css";
@@ -18,7 +18,10 @@ import { AddIngredientPopUp, ShowRecipeDetailPopUp, SyncFridgePopUp } from "../P
 ////zustand
 import useFridgeStore from '../../store/useFridgeStore';
 import useAuthStore from '../../store/authStore'; 
-import { fetchAutocompleteResults } from '../api/searchAPI'
+
+
+import { fetchAutocompleteResults } from '../../api/searchAPI'
+
 
 
 
@@ -29,10 +32,12 @@ export function MyFridgeList({ editOrShow }) {
     const { user } = useAuthStore();
     const { ingredients, updateSingleIngredient, deleteIngredient, isLoading } = useFridgeStore();
 
+    // 데이터 로딩 중일 때 UI
     if (isLoading) {
         return <div>냉장고 재료를 불러오는 중...</div>;
     }
 
+    // 재료가 없을 때 UI
     if (!ingredients || ingredients.length === 0) {
         return <div className="text-center p-5">냉장고에 재료가 없습니다.</div>;
     }
@@ -49,12 +54,12 @@ export function MyFridgeList({ editOrShow }) {
                                     <h5 className="mb-1">{ingredient.ingredientName}</h5>
                                     <small className="text-muted">{ingredient.storagePeriod} days ago</small>
                                     <br />
+                                    {/* 이 input은 '검색창'이 아니라 '메모 수정'을 위한 입력창입니다. */}
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="memo장"
+                                        placeholder="메모"
                                         defaultValue={ingredient.memo}
-                                        // 2. onBlur 이벤트 발생 시, user.id와 함께 update 액션 호출
                                         onBlur={(e) => user?.id && updateSingleIngredient(
                                             { fridgeIngredientId: ingredient.fridgeIngredientId, memo: e.target.value },
                                             user.id
@@ -63,7 +68,6 @@ export function MyFridgeList({ editOrShow }) {
                                 </div>
                                 <div className="d-flex align-items-center gap-2">
                                     <div className="input-group" style={{ width: '110px' }}>
-                                        {/* 2. -, + 버튼 클릭 시, user.id와 함께 update 액션 호출 */}
                                         <button onClick={() => user?.id && updateSingleIngredient(
                                             { fridgeIngredientId: ingredient.fridgeIngredientId, count: ingredient.count - 1 },
                                             user.id
@@ -76,7 +80,6 @@ export function MyFridgeList({ editOrShow }) {
                                             user.id
                                         )} className="btn btn-outline-secondary" type="button">+</button>
                                     </div>
-                                    {/* 2. 삭제 버튼 클릭 시, user.id와 함께 delete 액션 호출 */}
                                     <button onClick={() => user?.id && deleteIngredient(ingredient.fridgeIngredientId, user.id)} className="btn btn-outline-danger" type="button">삭제</button>
                                 </div>
                             </div>
@@ -138,10 +141,13 @@ export function MyFridgeList({ editOrShow }) {
 
 
 
+//냉장고 메뉴 속 식재료 추가 섬색창(버튼 클릭)
 
 //냉장고 메뉴 속 식재료 추가 섬색창(버튼 클릭)
-export function SearchListInFridge() {
 
+
+// 부모로부터 results 배열을 props로 받음
+export function SearchListInFridge({ results }) {
     const [isShowAddIngredientPopUp, showAddIngredientPopUpFunction] = useState(false);
 
     const handleShowPopUp = () => {
@@ -150,44 +156,33 @@ export function SearchListInFridge() {
         }
     };
 
-
-
     return (
         <>
-            <div className="search-list-in-fridge">
-                <div className="list-group w-75 mx-auto " style={{ minWidth: "300px", maxHeight: "400px", overflowY: 'auto' }}>
-                  
-                    <button
-                        onClick={handleShowPopUp}
-                        type="button"
-                        className="list-group-item list-group-item-action rounded-3 shadow-sm border-0 my-1"
-                    >
-                        감
-                    </button>
-                    <button
-                        onClick={handleShowPopUp}
-                        type="button"
-                        className="list-group-item list-group-item-action rounded-3 shadow-sm border-0 my-1"
-                    >
-                        감
-                    </button>
-                    <button
-                        onClick={handleShowPopUp}
-                        type="button"
-                        className="list-group-item list-group-item-action rounded-3 shadow-sm border-0 my-1"
-                    >
-                        감
-                    </button>
+            <div className="search-list-in-fridge mt-3">
+                <div className="list-group w-75 mx-auto" style={{ minWidth: "300px", maxHeight: "400px", overflowY: 'auto' }}>
+                    {/* results 배열의 길이가 0보다 클 때만 목록을 렌더링 */}
+                    {results && results.length > 0 ? (
+                        results.map((item) => (
+                            <button
+                                key={item.id} // 각 아이템에 고유한 key를 부여
+                                onClick={handleShowPopUp}
+                                type="button"
+                                className="list-group-item list-group-item-action rounded-3 shadow-sm border-0 my-1"
+                            >
+                                {item.name} {/* API 응답의 name 값을 노출 */}
+                            </button>
+                        ))
+                    ) : (
+                        // 검색 결과가 없을 때 표시할 메시지
+                        <p className="text-center text-muted">검색 결과가 없습니다.</p>
+                    )}
                 </div>
             </div>
             {isShowAddIngredientPopUp && <AddIngredientPopUp isShowAddIngredientPopUp={isShowAddIngredientPopUp}
                 showAddIngredientPopUpFunction={showAddIngredientPopUpFunction} />}
         </>
-
     );
 }
-
-
 
 //     <div class="search-result-in-fridge-item">
 //     예시 1
@@ -476,17 +471,17 @@ export function HistoryList() {
 
 
 
-export default function SelectList({ type, editOrShow, isShowSyncFridgePopUp }) {
+export default function SelectList({ type, results, editOrShow, isShowSyncFridgePopUp }) {
 
     // 순서 잘 보기
-    const renderList = (type, editOrShow, isShowSyncFridgePopUp) => {
+    const renderList = (type, results, editOrShow, isShowSyncFridgePopUp) => {
         switch (type) {
             case 'myFridge':
                 return <MyFridgeList
                     editOrShow={editOrShow}
                 />;
             case 'searchInFridge':
-                return <SearchListInFridge />;
+                return <SearchListInFridge results={results}/>;
             case 'searchInRecipeNav':
                 return <SearchListInRecipeNav />;
             case 'myFridgeInNav':
@@ -503,7 +498,7 @@ export default function SelectList({ type, editOrShow, isShowSyncFridgePopUp }) 
     };
 
     // 순서 잘 보기
-    return <>{renderList(type, editOrShow, isShowSyncFridgePopUp)}</>;
+    return <>{renderList(type, results, editOrShow, isShowSyncFridgePopUp)}</>;
 
 }
 
