@@ -10,6 +10,7 @@ import apiClient from "./apiModule";
 export const getFridgeIngredients = async (memberId, pageable) => {
     try {
         const params = {
+
             memberId,
             ...pageable,
         };

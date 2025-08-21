@@ -337,12 +337,17 @@ export function MyFridgeListInNav() {
 export function RecipeList() {
 
     const [isShowRecipeDetailPopUp, showRecipeDetailPopUpFunction] = useState(false);
-
+    const [isBookMark, isBookMarkFunction] = useState(false);
     const handleShowPopUp = () => {
         if (!isShowRecipeDetailPopUp) {
             showRecipeDetailPopUpFunction(nowstate => !nowstate);
         }
     };
+
+    const handleBookMark =  () => {
+        isBookMarkFunction(nowstate => !nowstate);
+    }
+
     return (
         <>
             <div className="custom-list">
@@ -361,14 +366,14 @@ export function RecipeList() {
                         </div>
                     
                     </button>
-                    <button className="bookmark-btn">
-                        <i className="fa-regular fa-bookmark"></i>
+                    <button onClick={handleBookMark} className={`bookmark-btn p-4 mx-auto d-block ${isBookMark ? 'active' : ''}`}>
+                        <i className={`fa-bookmark ${isBookMark ? 'fa-solid' : 'fa-regular'}`}></i>
                     </button>
                     
                 </div>
             </div>
             {isShowRecipeDetailPopUp &&
-                <ShowRecipeDetailPopUp isShowRecipeDetailPopUp={isShowRecipeDetailPopUp}
+                <ShowRecipeDetailPopUp isBookMark={isBookMark} isShowRecipeDetailPopUp={isShowRecipeDetailPopUp}
                     showRecipeDetailPopUpFunction={showRecipeDetailPopUpFunction} />
             }
         </>

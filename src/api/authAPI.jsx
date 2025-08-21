@@ -1,8 +1,6 @@
 import apiClient from "./apiModule";
 
 
-
-
 ///auth
 export const loginRequest = async (loginId, password) => {
     try {

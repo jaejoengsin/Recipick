@@ -37,7 +37,7 @@ const useAuthStore = create((set) => ({
     // 앱 시작 시 로그인 상태를 확인하는 액션
     checkAuth: () => {
         const storedUser = localStorage.getItem('user');
-        console.log(storedUser);
+     
         //새로고침 시에 로컬 스토리지에 저장된 로그인 정보를 불러와서 zustand 전역 저장소에 저장
         if (storedUser) { 
             set({ user: JSON.parse(storedUser), isLoggedIn: true });

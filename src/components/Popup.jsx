@@ -1,15 +1,25 @@
 import "./Popup.css";
+import React, { useState } from 'react'; 
 
 
 
 
 
-
-
-export function ShowRecipeDetailPopUp({ isShowRecipeDetailPopUp, showRecipeDetailPopUpFunction }) {
+export function ShowRecipeDetailPopUp({ isBookMarkFunction, isShowRecipeDetailPopUp, showRecipeDetailPopUpFunction }) {
     const handleCloseRecipeDetail = () => {
         showRecipeDetailPopUpFunction(false);
     };
+
+    // 2. 북마크 상태를 저장할 state 변수를 생성합니다. (기본값: false)
+    const [isBookmarDetail, setDetailBookmarked] = useState(false);
+
+    // 3. 북마크 버튼 클릭 시 실행될 함수
+    const handleBookmarkClick = () => {
+        // isBookmarked 상태를 현재와 반대되는 값(true <-> false)으로 변경합니다.
+        setDetailBookmarked(prev => !prev);
+        isBookMarkFunction(prev => !prev);
+    };
+
     return (
         <div className="card mb-3 ">
             <div className="custom-container">
@@ -21,8 +31,19 @@ export function ShowRecipeDetailPopUp({ isShowRecipeDetailPopUp, showRecipeDetai
                         <li className="list-group-item">재료</li>
                         <li className="list-group-item">레시피(조리법)</li>
                         <li className="list-group-item text-center">
-                            <button onClick={handleCloseRecipeDetail} id="bookmark-btn" className="bookmark-btn p-4 mx-auto d-block">
-                                <i className="fa-regular fa-bookmark"></i>
+                            {/* 4. 버튼의 className과 onClick을 수정합니다.
+                                - isBookmarked가 true이면 'active' 클래스를 추가합니다.
+                                - onClick 이벤트에 handleBookmarkClick 함수를 연결합니다.
+                            */}
+                            <button
+                                onClick={handleBookmarkClick}
+                                id="bookmark-btn"
+                                className={`bookmark-btn p-4 mx-auto d-block ${isBookmarDetail ? 'active' : ''}`}
+                            >
+                                {/* 5. 아이콘의 className도 isBookmarked 상태에 따라 동적으로 변경합니다.
+                                    - isBookmarked가 true이면 'fa-solid', false이면 'fa-regular'를 적용합니다.
+                                */}
+                                <i className={`fa-bookmark ${isBookmarDetail ? 'fa-solid' : 'fa-regular'}`}></i>
                             </button>
                         </li>
                     </ul>
@@ -31,21 +52,6 @@ export function ShowRecipeDetailPopUp({ isShowRecipeDetailPopUp, showRecipeDetai
         </div>
     );
 }
-// 스크랩 반응 코드
-// const btn = document.getElementById('bookmark-btn');
-// const icon = btn.querySelector('.fa-bookmark');
-// btn.addEventListener('click', function (event) {
-//     event.preventDefault();
-//     btn.classList.toggle('active');
-//     if (btn.classList.contains('active')) {
-//         icon.classList.remove('fa-regular');
-//         icon.classList.add('fa-solid');
-//     } else {
-//         icon.classList.remove('fa-solid');
-//         icon.classList.add('fa-regular');
-//     }
-// });
-
 
 
 
