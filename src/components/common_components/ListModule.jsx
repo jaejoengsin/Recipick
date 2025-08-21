@@ -15,120 +15,79 @@ import { AddIngredientPopUp, ShowRecipeDetailPopUp, SyncFridgePopUp } from "../P
 
 
 
+////zustand
+import useFridgeStore from '../../store/fridgeStore';
 
-export function MyFridgeList({ editOrShow }) {
 
+
+
+
+export function MyFridgeList({ editOrShow, ingredients, setIngredients }) {
+
+
+    const { ingredients, updateIngredient, deleteIngredient, isLoading } = useFridgeStore();
+    
+    if (isLoading) {
+        return <div>냉장고 재료를 불러오는 중...</div>;
+    }
+
+
+    if (!ingredients || ingredients.length === 0) {
+        return <div className="text-center p-5">냉장고에 재료가 없습니다.</div>;
+    }
+    
     return (
         <div className="fridge-list">
-
-            {/* - 이 div에 maxHeight를 500px로 설정했습니다.
-          - 리스트 내용이 500px보다 길어지면, overflowY: 'auto' 속성에 의해
-          - 자동으로 세로 스크롤바가 나타납니다.
-          - 기존의 h-75 클래스는 제거하여 고정 높이를 사용하도록 했습니다.
-        */}
             <div className="list-group pt-2 w-75 mx-auto" style={{ maxHeight: '500px', overflowY: 'auto' }}>
-                {/* state: edit */}
-                {editOrShow &&
-                    <>
-                        <a href="#" className="list-group-item list-group-item-action">
+                {ingredients.map(ingredient => (
+                    // 3. 각 버튼의 onClick 이벤트에 스토어에서 가져온 액션을 직접 연결합니다.
+                    editOrShow ? (
+                        // 편집 모드
+                        <div key={ingredient.fridgeIngredientId} className="list-group-item list-group-item-action">
                             <div className="d-flex w-100 justify-content-between align-items-center">
                                 <div>
-                                    <h5 className="mb-1">재료명 </h5>
-                                    <small className="text-muted">3 days ago</small>
+                                    <h5 className="mb-1">{ingredient.ingredientName}</h5>
+                                    <small className="text-muted">{ingredient.storagePeriod} days ago</small>
                                     <br />
-                                    <input type="text" className="form-control" placeholder="memo장" />
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="memo장"
+                                        defaultValue={ingredient.memo}
+                                        // onBlur 이벤트로 메모 수정 API 호출 가능
+                                        onBlur={(e) => updateIngredient(ingredient.fridgeIngredientId, { memo: e.target.value })}
+                                    />
                                 </div>
                                 <div className="d-flex align-items-center gap-2">
                                     <div className="input-group" style={{ width: '110px' }}>
-                                        <button className="btn btn-outline-secondary btn-decrease" type="button">−</button>
-                                        <input type="text" className="form-control text-center qty-value" defaultValue="1" readOnly />
-                                        <button className="btn btn-outline-secondary btn-increase" type="button">+</button>
+                                        <button onClick={() => updateIngredient(ingredient.fridgeIngredientId, { count: ingredient.count - 1 })} className="btn btn-outline-secondary" type="button">−</button>
+                                        <input type="text" className="form-control text-center" value={ingredient.count} readOnly />
+                                        <button onClick={() => updateIngredient(ingredient.fridgeIngredientId, { count: ingredient.count + 1 })} className="btn btn-outline-secondary" type="button">+</button>
                                     </div>
-                                    <button className="btn btn-outline-danger btn-delete" type="button">삭제</button>
+                                    <button onClick={() => deleteIngredient(ingredient.fridgeIngredientId)} className="btn btn-outline-danger" type="button">삭제</button>
                                 </div>
                             </div>
-                        </a>
-
-                    </>
-                }
-                {/* state:show */}
-                {!editOrShow &&
-                    <>
-                        <div className="list-group-item">
+                        </div>
+                    ) : (
+                        // 보기 모드
+                        <div key={ingredient.fridgeIngredientId} className="list-group-item">
                             <div className="d-flex w-100 justify-content-between align-items-center">
                                 <div>
-                                    <h5 className="mb-1">재료명</h5>
-                                    <small className="text-muted">3 days ago</small>
+                                    <h5 className="mb-1">{ingredient.ingredientName}</h5>
+                                    <small className="text-muted">{ingredient.storagePeriod} days ago</small>
                                     <div className="mt-2 text-body-secondary">
-                                        여기에 메모 내용을 보여줍니다.
+                                        {ingredient.memo}
                                     </div>
                                 </div>
                                 <div>
-                                    <span className="badge bg-transparent fs-3 text-dark ">1</span>
+                                    <span className="badge bg-transparent fs-3 text-dark">{ingredient.count}</span>
                                 </div>
                             </div>
                         </div>
-                    <div className="list-group-item">
-                        <div className="d-flex w-100 justify-content-between align-items-center">
-                            <div>
-                                <h5 className="mb-1">재료명</h5>
-                                <small className="text-muted">3 days ago</small>
-                                <div className="mt-2 text-body-secondary">
-                                    여기에 메모 내용을 보여줍니다.
-                                </div>
-                            </div>
-                            <div>
-                                <span className="badge bg-transparent fs-3 text-dark ">1</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="list-group-item">
-                        <div className="d-flex w-100 justify-content-between align-items-center">
-                            <div>
-                                <h5 className="mb-1">재료명</h5>
-                                <small className="text-muted">3 days ago</small>
-                                <div className="mt-2 text-body-secondary">
-                                    여기에 메모 내용을 보여줍니다.
-                                </div>
-                            </div>
-                            <div>
-                                <span className="badge bg-transparent fs-3 text-dark ">1</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="list-group-item">
-                        <div className="d-flex w-100 justify-content-between align-items-center">
-                            <div>
-                                <h5 className="mb-1">재료명</h5>
-                                <small className="text-muted">3 days ago</small>
-                                <div className="mt-2 text-body-secondary">
-                                    여기에 메모 내용을 보여줍니다.
-                                </div>
-                            </div>
-                            <div>
-                                <span className="badge bg-transparent fs-3 text-dark ">1</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="list-group-item">
-                        <div className="d-flex w-100 justify-content-between align-items-center">
-                            <div>
-                                <h5 className="mb-1">재료명</h5>
-                                <small className="text-muted">3 days ago</small>
-                                <div className="mt-2 text-body-secondary">
-                                    여기에 메모 내용을 보여줍니다.
-                                </div>
-                            </div>
-                            <div>
-                                <span className="badge bg-transparent fs-3 text-dark ">1</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    </>
-                }
+                    )
+                ))}
             </div>
-            </div>
+        </div>
     );
 }
 // <div className="fridge-list-item">
@@ -504,19 +463,21 @@ export function HistoryList() {
 
 
 
-export default function SelectList({ editOrShow, type, isShowSyncFridgePopUp }) {
+export default function SelectList({ type, editOrShow, isShowSyncFridgePopUp }) {
 
     // 순서 잘 보기
-    const renderList = (editOrShow, isShowSyncFridgePopUp) => {
+    const renderList = (type, editOrShow, isShowSyncFridgePopUp) => {
         switch (type) {
             case 'myFridge':
-                return <MyFridgeList editOrShow={editOrShow} />;
+                return <MyFridgeList
+                    editOrShow={editOrShow}
+                />;
             case 'searchInFridge':
                 return <SearchListInFridge />;
             case 'searchInRecipeNav':
                 return <SearchListInRecipeNav />;
             case 'myFridgeInNav':
-                return <MyFridgeListInNav />;
+                return  <MyFridgeListInNav />;
             case 'recipe':
                 return <RecipeList />;
             case 'cart':
@@ -529,10 +490,9 @@ export default function SelectList({ editOrShow, type, isShowSyncFridgePopUp }) 
     };
 
     // 순서 잘 보기
-    return <>{renderList(editOrShow, isShowSyncFridgePopUp)}</>;
+    return <>{renderList(type, editOrShow, isShowSyncFridgePopUp)}</>;
 
 }
-
 
 
 
