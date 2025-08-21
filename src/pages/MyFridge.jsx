@@ -8,10 +8,10 @@ import { FridgeAddButton, FridgeEditButton } from "../components/common_componen
 
 
 //api
-import * as fridgeAPI from "../api/fridgeAPI";
+
 //userid
 import useAuthStore from "../store/authStore";
-
+import useFridgeStore from '../store/useFridgeStore';
 import "./MyFridge.css";
 import "../styles/font.css"
 

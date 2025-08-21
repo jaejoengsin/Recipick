@@ -16,33 +16,33 @@ import { AddIngredientPopUp, ShowRecipeDetailPopUp, SyncFridgePopUp } from "../P
 
 
 ////zustand
-import useFridgeStore from '../../store/fridgeStore';
+import useFridgeStore from '../../store/useFridgeStore';
+import useAuthStore from '../../store/authStore'; 
+import { fetchAutocompleteResults } from '../api/searchAPI'
 
 
 
 
 
-export function MyFridgeList({ editOrShow, ingredients, setIngredients }) {
+export function MyFridgeList({ editOrShow }) {
+    // 1. 필요한 스토어에서 상태와 액션을 모두 가져옵니다.
+    const { user } = useAuthStore();
+    const { ingredients, updateSingleIngredient, deleteIngredient, isLoading } = useFridgeStore();
 
-
-    const { ingredients, updateIngredient, deleteIngredient, isLoading } = useFridgeStore();
-    
     if (isLoading) {
         return <div>냉장고 재료를 불러오는 중...</div>;
     }
 
-
     if (!ingredients || ingredients.length === 0) {
         return <div className="text-center p-5">냉장고에 재료가 없습니다.</div>;
     }
-    
+
     return (
         <div className="fridge-list">
             <div className="list-group pt-2 w-75 mx-auto" style={{ maxHeight: '500px', overflowY: 'auto' }}>
                 {ingredients.map(ingredient => (
-                    // 3. 각 버튼의 onClick 이벤트에 스토어에서 가져온 액션을 직접 연결합니다.
                     editOrShow ? (
-                        // 편집 모드
+                        // --- 편집 모드 ---
                         <div key={ingredient.fridgeIngredientId} className="list-group-item list-group-item-action">
                             <div className="d-flex w-100 justify-content-between align-items-center">
                                 <div>
@@ -54,22 +54,35 @@ export function MyFridgeList({ editOrShow, ingredients, setIngredients }) {
                                         className="form-control"
                                         placeholder="memo장"
                                         defaultValue={ingredient.memo}
-                                        // onBlur 이벤트로 메모 수정 API 호출 가능
-                                        onBlur={(e) => updateIngredient(ingredient.fridgeIngredientId, { memo: e.target.value })}
+                                        // 2. onBlur 이벤트 발생 시, user.id와 함께 update 액션 호출
+                                        onBlur={(e) => user?.id && updateSingleIngredient(
+                                            { fridgeIngredientId: ingredient.fridgeIngredientId, memo: e.target.value },
+                                            user.id
+                                        )}
                                     />
                                 </div>
                                 <div className="d-flex align-items-center gap-2">
                                     <div className="input-group" style={{ width: '110px' }}>
-                                        <button onClick={() => updateIngredient(ingredient.fridgeIngredientId, { count: ingredient.count - 1 })} className="btn btn-outline-secondary" type="button">−</button>
+                                        {/* 2. -, + 버튼 클릭 시, user.id와 함께 update 액션 호출 */}
+                                        <button onClick={() => user?.id && updateSingleIngredient(
+                                            { fridgeIngredientId: ingredient.fridgeIngredientId, count: ingredient.count - 1 },
+                                            user.id
+                                        )} className="btn btn-outline-secondary" type="button">−</button>
+
                                         <input type="text" className="form-control text-center" value={ingredient.count} readOnly />
-                                        <button onClick={() => updateIngredient(ingredient.fridgeIngredientId, { count: ingredient.count + 1 })} className="btn btn-outline-secondary" type="button">+</button>
+
+                                        <button onClick={() => user?.id && updateSingleIngredient(
+                                            { fridgeIngredientId: ingredient.fridgeIngredientId, count: ingredient.count + 1 },
+                                            user.id
+                                        )} className="btn btn-outline-secondary" type="button">+</button>
                                     </div>
-                                    <button onClick={() => deleteIngredient(ingredient.fridgeIngredientId)} className="btn btn-outline-danger" type="button">삭제</button>
+                                    {/* 2. 삭제 버튼 클릭 시, user.id와 함께 delete 액션 호출 */}
+                                    <button onClick={() => user?.id && deleteIngredient(ingredient.fridgeIngredientId, user.id)} className="btn btn-outline-danger" type="button">삭제</button>
                                 </div>
                             </div>
                         </div>
                     ) : (
-                        // 보기 모드
+                        // --- 보기 모드 ---
                         <div key={ingredient.fridgeIngredientId} className="list-group-item">
                             <div className="d-flex w-100 justify-content-between align-items-center">
                                 <div>
