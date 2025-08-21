@@ -1,6 +1,5 @@
 import apiClient from "./apiModule";
 
-import apiClient from "./apiClient"; // 기존에 설정한 apiClient 인스턴스
 
 /**
  * 재료 이름 자동완성 검색 결과를 요청합니다.
